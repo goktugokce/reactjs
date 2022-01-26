@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
-import StateHandler from './components/StateHandler';
-import Card from './components/Card/Card'
+
 const App = () => {
   
   const [items, setItems] = useState([{
@@ -18,38 +17,53 @@ const App = () => {
 
   const [inputValue, setInput] = useState({
     inputText:'',
-    inputLegth: 0
+    inputLength: 0
   });
 
   const inputHandler = (event) => {
-    setInput((prevState) => {
+    /*setInput((prevState) => {
       return{
       ...prevState,
       inputText: event.target.value}
-    })
-
-    /*
-    const inputHandler = (event) => {
+    });
+    */
       setInput({
         ...inputValue,
         inputText : event.target.value
       })
     }
-    */
+
+  const submitHandler = (event) => {
+    event.preventDefault();
+    setInput((prevState) => {
+      return{
+      ...prevState,
+      inputLength: ((event.target.value).toString())}
+    })
+    console.log(inputValue.inputLength)
+    
   }
 
-  return <form>
+
+  return (
+    <div>
+    <form onSubmit={submitHandler}>
     <div>
       <ul>
         {items.map((el) => {
-          return <li>el.name</li>
+          return <li>{el.name}</li>
         })}
       </ul>
     </div>
     <div>
-      <input onChange={inputHandler} type="text">Type Here</input>
+      <input onChange={inputHandler} type="text"/>
     </div>
-  </form>;
-};
+    <div>
+      <button type="submit">Submit</button>
+    </div>
+  </form>
+  </div>
+  )
+}
 
 export default App;
